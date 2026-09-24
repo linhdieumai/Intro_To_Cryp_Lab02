@@ -149,7 +149,8 @@ if __name__ == "__main__":
     sha256_out = get_file_sha256(file_out)
 
     # Kiểm tra đẳng thức c0 ⊕ c1 == m0 ⊕ m1
-    c0, c1, m0, m1 = encrypt_buggy(file_in, file_enc, key)
+    buggy_file = "book_buggy.enc"
+    c0, c1, m0, m1 = encrypt_buggy(file_in, buggy_file, key)
     xor_c = fast_xor(c0, c1)
     xor_m = fast_xor(m0, m1)
 
