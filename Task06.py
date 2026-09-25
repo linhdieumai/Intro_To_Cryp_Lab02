@@ -1,4 +1,4 @@
-import random
+import os
 
 
 def lfsr_step(register: int, taps: set[int], n: int):
@@ -112,9 +112,9 @@ if __name__ == "__main__":
     # 3. Mã hóa thông điệp bằng LFSR, sau đó in seed, ciphertext và tỷ lệ bit 1
     n2 = 32
     taps2 = {0, 10, 30, 31}
-    seed2 = random.getrandbits(32)
+    seed2 = int.from_bytes(os.urandom(4), "big")
     while seed2 == 0:
-        seed2 = random.getrandbits(32)
+        seed2 = int.from_bytes(os.urandom(4), "big")
 
     message = (
         "From: exam-office@example.edu\n"
