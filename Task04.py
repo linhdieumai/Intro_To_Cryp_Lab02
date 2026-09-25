@@ -137,6 +137,15 @@ if __name__ == "__main__":
     file_in = "book.pdf"
     file_enc = "book.enc"
     file_out = "book.dec.pdf"
+
+    if not os.path.isfile(file_in):
+        raise FileNotFoundError(f"Input file not found: {file_in}")
+    if os.path.getsize(file_in) < 2 * CHUNK_SIZE:
+        raise ValueError(
+            f"Input file must be at least {2 * CHUNK_SIZE} bytes "
+            f"for the two-chunk XOR demonstration: {file_in}"
+        )
+
     #encrypt
     prefix, first_16_plain, first_16_cipher, enc_time = encrypt_book(file_in,file_enc,key)
     #decrypt
@@ -149,7 +158,6 @@ if __name__ == "__main__":
     sha256_out = get_file_sha256(file_out)
 
     # Kiểm tra đẳng thức c0 ⊕ c1 == m0 ⊕ m1
-    c0, c1, m0, m1 = encrypt_buggy(file_in, file_enc, key)
     buggy_file = "book_buggy.enc"
     c0, c1, m0, m1 = encrypt_buggy(file_in, buggy_file, key)
     xor_c = fast_xor(c0, c1)
